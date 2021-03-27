@@ -1,0 +1,34 @@
+---
+- hosts: all
+  tasks:
+    - name: Copy dockerfile to remote machine
+      copy:
+        src: Dockerfile
+        dest: .
+
+    - name: Copy war to remote machine
+      copy:
+        src: ./webapp/target/webapp.war
+        dest: ./webapp/target/
+
+    - name: "Start docker service"
+      command: "sudo service docker start"
+      ignore_errors: true
+
+    - name: "Stop the running containers"
+      command: "docker stop customerContainer"
+      ignore_errors: true
+
+    - name: "Delete the container"
+      command: "docker rm customerContainer"
+      ignore_errors: true
+
+    - name: "Delete the image"
+      command: "docker rmi customimage"
+      ignore_errors: true
+
+    - name: "Create image from docker file"
+      command: "docker build -t customimage ."
+
+    - name: "Create and run container"
+      command: "docker run -d -p 8080:8080 --name customerContainer customimage"
