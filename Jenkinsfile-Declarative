@@ -20,7 +20,7 @@ pipeline {
 
         stage('Build') {
             steps{
-                sh '"$MVN_HOME/bin/mvn" test install'
+                sh 'mvn test install'
             }
         }
 
