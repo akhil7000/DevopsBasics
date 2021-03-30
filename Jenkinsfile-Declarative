@@ -26,10 +26,15 @@ pipeline {
 
         stage('Create hosts file'){
             steps{
-                input {
-                    message "Enter IP of QA server"
-                    parameters {
-                        string defaultValue: '52.11.213.8', description: '', name: 'qaServer', trim: true
+                script{
+                    try{
+                        timeout(time: 60, unit: 'SECONDS') {
+                            qaServer = input message: 'Enter IP of QA server',
+                                    parameters: [string(defaultValue: "$qaServer", description: '', name: 'qaServer', trim: true)]
+                        }
+                    }
+                    catch (Exception e){
+                        echo 'Exception thrown due to timeout'
                     }
                 }
 
