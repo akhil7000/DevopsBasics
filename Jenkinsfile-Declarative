@@ -26,14 +26,9 @@ pipeline {
 
         stage('Create hosts file'){
             steps{
-                try{
-                    timeout(time: 60, unit: 'SECONDS') {
+                timeout(time: 60, unit: 'SECONDS') {
                         qaServer = input message: 'Enter IP of QA server',
                                 parameters: [string(defaultValue: "$qaServer", description: '', name: 'qaServer', trim: true)]
-                    }
-                }
-                catch (Exception e){
-                    echo 'Exception thrown due to timeout'
                 }
 
                 sh 'rm -rf hosts'
