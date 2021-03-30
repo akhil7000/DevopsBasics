@@ -4,12 +4,12 @@ pipeline {
 
     environment{
         PATH="/opt/apache-maven-3.6.3/bin:$PATH"
+        def controllerServer="18.236.72.3"
+        def qaServer="52.11.213.8"
     }
 
     stages{
 
-        def controllerServer="18.236.72.3"
-        def qaServer="52.11.213.8"
 
         stage('Git Checkout') {
             steps{
